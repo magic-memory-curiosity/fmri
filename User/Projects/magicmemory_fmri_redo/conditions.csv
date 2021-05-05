@@ -1,0 +1,2 @@
+name,notes,stimuli,procedure,fullscreen,welcome,participant_id,end_message,start_message,buffer,scripts,
+condition_1,You can put more detailed notes in this field,stimuli_1.csv,procedure_1.csv,on,,on,"Thank you again for completing this last part of the study. The completion code is ""Obliviate"". Please email it to s.meliss@reading.ac.uk",Please insert the study ID here that has been sent to you in the email.,5,,

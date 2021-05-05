@@ -1,0 +1,74 @@
+<style>
+.McButton{
+  display: center;
+  text-align: center;
+  margin-top: 15px;
+}
+.answerBox{
+      margin: auto;
+    text-align:center;
+    display: center;
+}
+.pic{
+    margin: auto;
+    text-align:center;
+    display: center;
+}
+#content {
+  width: 90%;
+  max-width: 850px;
+  min-width: 600px;
+}
+.instruct {
+  font-size: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+</style>
+
+
+<p>
+  <br><br></p><center>{{Text}}</center><br><br>
+<p></p>
+
+<!-- Show the image -->
+<div class="pic">
+      <img height="720px" src="{{Image}}">
+</div>
+
+
+<!-- Show the text + answer box + submit button-->
+<div class="answerBox">
+  
+  <p>{{Text}}</p>
+  <p>Please describe what has happened in this magic trick according to your memory.</p>
+  <p>If you cannot recall it, please write "no recall".</p>  
+  <input type="text" id="trickAnswer" name="trickAnswer" class="collectorInput" size="100%">
+  
+  <input type="submit" class="collectorButton collectorAdvance McButton" id = "submit" name="submitButton" onclick="Trial.submit()" value="Submit" style="display:none">
+
+</div>
+
+
+
+
+
+
+<script>
+
+Trial.set_timer(function(){
+  $("#trickAnswer").focus();
+},0)
+
+$(document).ready(function () {
+  $('#trickAnswer').on('input change', function () {
+    if ($(this).val() != '') {
+      $('#submit').show();
+    }
+    else {
+      $('#submit').hide();
+    }
+  });
+});
+</script>
+</body></html>
