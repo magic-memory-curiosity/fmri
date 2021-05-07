@@ -1,0 +1,205 @@
+<style>
+label {
+    display:table-row;
+    }
+label > div {
+    display:table-cell;
+}
+.pic {
+    margin: auto;
+    text-align:center;
+    display: center;
+    }
+.recognitiondiv {
+    margin: auto;
+    text-align:center;
+    display: center;
+    }
+.questiondiv { 
+    font-size: 150%; 
+    font-style: italic;
+    text-align: center;
+    }
+.answerdiv { 
+    font-size: 120%; 
+    color: #666;
+    }
+.recognitionAnswers { 
+    text-align: left;
+    display: inline-block;
+    }
+.McButton {
+    text-align:center;
+    margin-top: 15px;
+    }
+.LikertArea {
+    width: 50%;
+    height: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    }
+.LikertDescArea	{	
+    overflow: hidden;
+    margin-top: 10px;
+    }
+.LikertDesc	{	
+    color: #666;
+    font-size: 100%;
+    max-width: 72%;
+    display: inline-block;
+    }
+.LikertLeft	{	
+    float: left;
+    }
+.LikertRight {	
+    float: right;
+    }
+.Likert	{	
+    display: inline-block;
+    text-align: center;
+    width: 16.6%;
+    font-size: 120%
+    }
+.Likert > label	{	
+    display: inline-block;
+    width: 100%;
+    }
+</style>
+
+<p>
+  <br><br></p><center>{{Text}}</center><br><br>
+</p>
+
+<!-- Show the image -->
+<div class="pic">
+    <img height="720px" src="{{Image}}">
+</div>
+
+<!-- Recogntion: what happens in this trick? -->
+<div class="recognitiondiv maindiv">
+  <div class="recognitionQuestion questiondiv">What happens in this magic trick?</div>
+  <div class="recognitionAnswers answerdiv">
+    <form action="">
+      <ul class="recognitionAnswers">
+          <label class="option_class op1"><input type="radio" name="recognitionRadio" id="inp1" value="1"></label>
+          <label class="option_class op2"><input type="radio" name="recognitionRadio" id="inp2" value="2"></label>
+          <label class="option_class op3"><input type="radio" name="recognitionRadio" id="inp3" value="3"></label>
+          <label class="option_class op4"><input type="radio" name="recognitionRadio" id="inp4" value="4"></label>
+      </ul>
+    </form>
+  </div>
+
+  <div class="McButton">
+      <input type="button" class="collectorButton responseButton recognitionButton" name="recognitionButton" value="Submit" disabled="">
+  </div>
+</div>
+
+<div class="confidencediv maindiv" style="display: none;">
+  <div class="insertConfidence"></div>
+  <div class="McButton">
+    <input type="button" class="collectorButton responseButton confidenceButton" name="confidenceButton" value="Submit" disabled="">
+  </div>
+</div>
+
+
+<input type = "text" name= "Recognition_chosen" id ="Recognition_chosen" style="display: none;">
+<input type = "text" name= "Confidence" id ="Confidence" style="display: none;"> 
+
+<button class="collectorButton nextTrial" style="display: none;">Submit</button>  
+
+<input type="hidden" name="recognition_RT" id="recognition_RT">
+<input type="hidden" name="confidence_RT" id="confidence_RT">
+
+
+<script>
+confidenceScale = prepareLikert( 'Confidence', ['How confident are you regarding your answer?', 'Not confident at all', 'Very confident']);
+
+function prepareLikert( name, text ) {
+likertScale = '';
+for( i = 1; i < 7; i++ ) {
+    likertScale = likertScale +'<span class="Likert"><label><input name="'+ name +'" type="radio" value="'+ i +'" /><br />'+ i +'</label></span>';
+}
+likertScale =
+    '<div class="LikertArea maindiv'+ name +'">'+
+        '<span class="LikertQuestion questiondiv"><center> '+ text[0] +'</center></span>'+
+        '<div class="LikertDescArea answerdiv '+ name +'Answers">'+
+            '<span class="LikertDesc LikertLeft">'+
+                text[1]+
+            '</span>'+
+            '<span class="LikertDesc LikertRight">'+
+                text[2]+
+            '</span>'+
+        '</div>'+
+        '<div class="LikertScale">'+
+            likertScale+
+        '</div>'+
+    '</div>';
+return likertScale;
+}
+
+function shuffle(array) {
+  var tmp, current, top = array.length;
+  if(top) while(--top) {
+    current = Math.floor(Math.random() * (top + 1));
+    tmp = array[current];
+    array[current] = array[top];
+    array[top] = tmp;
+  }
+  return array;
+}    
+
+var myArray1 = ["{{option1}}","{{option2}}","{{option3}}","{{option4}}"];
+shuffle(myArray1);
+
+//Prepare Scales and Images
+
+baseline_time = (new Date()).getTime();            
+
+$(".insertConfidence").append(confidenceScale); 
+
+$(".op1").append(myArray1[0]); 
+$('#inp1').val(myArray1[0]);
+
+$(".op2").append(myArray1[1]); 
+$('#inp2').val(myArray1[1]);
+
+$(".op3").append(myArray1[2]); 
+$('#inp3').val(myArray1[2]);
+
+$(".op4").append(myArray1[3]); 
+$('#inp4').val(myArray1[3]);
+
+delayTime = 800;
+
+
+//enable Submit-Button when a radio button gets selected
+$("input[type='radio']").on("click", function() {
+    $(this).closest(".maindiv").find("input[type='button']").prop("disabled",false);
+});
+    
+//when recognition button is pressed, let the question vanish and the curiosity one appear
+$("input[name='recognitionButton']").on("click", function() {
+    var this_RT = (new Date()).getTime() - baseline_time ;
+    $("#recognition_RT").val(this_RT);
+            console.log('RT recognition : '+$("#recognition_RT").val())
+    $("#Recognition_chosen").val($('input[name=recognitionRadio]:checked').val());
+            console.log('recognition answer: '+$("#Recognition_chosen").val())
+	$(".recognitiondiv").hide();
+	$(".pic").hide();
+	setTimeout( function() {
+		$(".confidencediv").show();
+		}, delayTime );
+	baseline_time = (new Date()).getTime();            
+});
+		
+//when confidence button is pressed, let collect the responses and move on to the next trial
+$("input[name='confidenceButton']").on("click", function() {
+    var this_RT = (new Date()).getTime() - baseline_time ;
+    $("#confidence_RT").val(this_RT);
+    $("#Confidence").val($('input[name=Confidence]:checked').val());
+        console.log('Confidence rating: '+$("#Confidence").val())
+    $(".collectorAdvance").click();
+    Phase.submit()
+});
+
+</script>
