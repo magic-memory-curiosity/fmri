@@ -64,7 +64,7 @@
       ],
       [
         "reward_belief",
-        "Please answer the following statement ONLY IF you have been offered <b>additional ÃÂ£0.80 bonus per correct answer</b>. If you have not been offered additional bonus, please select \"not applicable.\"<p>Did you believe that you would receive a bonus payment based on your performance?</p>",
+        "Please answer the following statement ONLY IF you have been offered <b>additional £0.80 bonus per correct answer</b>. If you have not been offered additional bonus, please select \"not applicable.\"<p>Did you believe that you would receive a bonus payment based on your performance?</p>",
         "likert",
         "Definitely agree |Somehow agree|Slightly agree|Slightly disagree|Somehow disagree|Definitely disagree|Not applicable",
         "6|5|4|3|2|1|999",
