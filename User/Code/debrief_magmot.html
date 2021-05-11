@@ -1,0 +1,33 @@
+<style>
+#instruct_text{
+  margin:auto;
+  width:600;
+
+}
+#proceed_button{
+  position:absolute;
+  right: 20px;
+}
+#trial_contents{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin:auto;
+  width:600;
+  height:800;
+}
+</style>
+<div id="trial_contents">
+  <div id="instruct_text">{{text}}</div>
+  
+  <p>If you are enrolled at Reading University and have signed up using the PCLS Research Panel, please answer the following debrief questions.</p>
+  <p>1. What are the independent variables in this experiment?</p>  
+  <input type="text" id="debriefAnswer1" name="debriefAnswer1" class="collectorInput" size="60%">
+  <p>2. Why is the cover story in an incidental memory encoding paradigm important? </p>  
+  <input type="text" id="debriefAnswer2" name="debriefAnswer2" class="collectorInput" size="60%">
+  <br><br>
+  <button class="btn btn-primary" id="proceed_button" onclick="Phase.submit()">Proceed</button>  
+</div>
+
